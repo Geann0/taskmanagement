@@ -1,0 +1,157 @@
+Task Management App/
+│
+├── 📄 README.md                          ← Start here! Main project documentation
+├── 📄 SETUP_SUMMARY.md                   ← Complete setup overview
+├── 📄 QUICK_REFERENCE.md                 ← Quick commands and shortcuts
+├── 📄 PROJECT_CHECKLIST.md               ← Progress tracking
+│
+├── 📁 frontend/                          ← React 18 + TypeScript Frontend (Port 3001)
+│   ├── 📄 package.json                   ← Dependencies & scripts
+│   ├── 📄 tsconfig.json                  ← TypeScript configuration
+│   ├── 📄 .eslintrc.json                 ← ESLint rules
+│   ├── 📄 .prettierrc                    ← Prettier formatting
+│   ├── 📄 .env.example                   ← Environment template (copy to .env)
+│   │
+│   ├── 📁 src/                           ← Source code
+│   │   ├── 📄 index.tsx                  ← React entry point
+│   │   ├── 📄 App.tsx                    ← Main app with routing
+│   │   │
+│   │   ├── 📁 components/                ← Reusable React components
+│   │   │   ├── 📄 Header.tsx
+│   │   │   ├── 📄 LoadingSpinner.tsx
+│   │   │   ├── 📄 Card.tsx
+│   │   │   └── 📄 Column.tsx
+│   │   │
+│   │   ├── 📁 pages/                     ← Full-page components
+│   │   │   ├── 📄 LoginPage.tsx          ← OAuth2 login
+│   │   │   └── 📄 Dashboard.tsx          ← Main dashboard
+│   │   │
+│   │   ├── 📁 hooks/                     ← Custom React hooks (ready for expansion)
+│   │   │
+│   │   ├── 📁 services/                  ← API & external services
+│   │   │   └── 📄 api.ts                 ← Axios API client
+│   │   │
+│   │   ├── 📁 lib/                       ← Utilities & state management
+│   │   │   ├── 📄 socket.ts              ← Socket.io client
+│   │   │   └── 📄 store.ts               ← Zustand stores
+│   │   │
+│   │   ├── 📁 types/                     ← TypeScript types
+│   │   │   └── 📄 index.ts               ← All domain types
+│   │   │
+│   │   └── 📁 styles/                    ← Global styles
+│   │       └── 📄 index.css              ← Tailwind CSS
+│   │
+│   └── 📁 public/                        ← Static assets
+│       └── 📄 index.html                 ← HTML template
+│
+├── 📁 backend/                           ← Express + MongoDB Backend (Port 3000)
+│   ├── 📄 package.json                   ← Dependencies & scripts
+│   ├── 📄 tsconfig.json                  ← TypeScript configuration
+│   ├── 📄 .eslintrc.json                 ← ESLint rules
+│   ├── 📄 .prettierrc                    ← Prettier formatting
+│   ├── 📄 jest.config.js                 ← Jest test configuration
+│   ├── 📄 Procfile                       ← Heroku deployment config
+│   ├── 📄 .env.example                   ← Environment template (copy to .env)
+│   │
+│   ├── 📁 src/                           ← Source code
+│   │   ├── 📄 index.ts                   ← Server entry point
+│   │   │
+│   │   ├── 📁 models/                    ← Mongoose database schemas
+│   │   │   ├── 📄 User.ts                ← User model
+│   │   │   ├── 📄 Project.ts             ← Project model
+│   │   │   ├── 📄 Board.ts               ← Board model
+│   │   │   ├── 📄 Column.ts              ← Column model
+│   │   │   ├── 📄 Card.ts                ← Card model (with comments, attachments)
+│   │   │   └── 📄 Notification.ts        ← Notification model
+│   │   │
+│   │   ├── 📁 routes/                    ← Express route handlers
+│   │   │   ├── 📄 auth.ts                ← Authentication endpoints
+│   │   │   ├── 📄 projects.ts            ← Project CRUD endpoints
+│   │   │   ├── 📄 boards.ts              ← Board endpoints
+│   │   │   ├── 📄 columns.ts             ← Column endpoints
+│   │   │   ├── 📄 cards.ts               ← Card endpoints
+│   │   │   └── 📄 notifications.ts       ← Notification endpoints
+│   │   │
+│   │   ├── 📁 controllers/               ← Business logic (ready for expansion)
+│   │   │
+│   │   ├── 📁 services/                  ← Service layer (ready for expansion)
+│   │   │
+│   │   ├── 📁 middleware/                ← Express middleware
+│   │   │   ├── 📄 auth.ts                ← JWT authentication
+│   │   │   ├── 📄 validation.ts          ← Input validation
+│   │   │   └── 📄 errorHandler.ts        ← Global error handler
+│   │   │
+│   │   ├── 📁 sockets/                   ← Socket.io event handlers
+│   │   │   └── 📄 setup.ts               ← Socket connection & events
+│   │   │
+│   │   ├── 📁 jobs/                      ← Background job handlers (ready for expansion)
+│   │   │
+│   │   └── 📁 utils/                     ← Utility functions
+│   │       ├── 📄 db.ts                  ← MongoDB connection
+│   │       ├── 📄 redis.ts               ← Redis connection
+│   │       └── 📄 jwt.ts                 ← JWT token utilities
+│   │
+│   ├── 📁 tests/                         ← Test files
+│   │
+│   └── 📁 dist/                          ← Compiled JavaScript (created on build)
+│
+├── 📁 docs/                              ← Documentation
+│   ├── 📄 API.md                         ← Complete API specification
+│   │                                      (endpoints, request/response examples)
+│   ├── 📄 ARCHITECTURE.md                ← System architecture & design
+│   │                                      (layers, data flow, scalability)
+│   ├── 📄 DEVELOPMENT.md                 ← Development workflow guide
+│   │                                      (local setup, testing, debugging)
+│   └── 📄 DEPLOYMENT.md                  ← Production deployment guide
+│                                          (Heroku, Netlify, databases)
+│
+├── 📁 .github/                           ← GitHub configuration
+│   └── 📁 workflows/                     ← CI/CD pipelines
+│       ├── 📄 backend-ci.yml             ← Backend testing & building
+│       ├── 📄 frontend-ci.yml            ← Frontend testing & building
+│       └── 📄 deploy.yml                 ← Production deployment
+│
+├── 📁 .husky/                            ← Git hooks
+│   └── 📄 pre-commit                     ← Pre-commit linting
+│
+├── 📄 docker-compose.yml                 ← Local MongoDB + Redis
+├── 📄 .gitignore                         ← Git ignore patterns
+├── 📄 .lintstagedrc                      ← Lint-staged configuration
+│
+└── 📋 Notes:
+    • All backend TypeScript files are in src/ and compiled to dist/
+    • All frontend TypeScript/TSX files are in src/ and built for production
+    • Environment variables: Copy .env.example to .env in both frontend & backend
+    • Database: MongoDB runs in Docker on localhost:27017
+    • Cache: Redis runs in Docker on localhost:6379
+    • API Docs: Generated from Swagger/OpenAPI spec (to be configured)
+    • Tests: Jest for both backend & frontend with ~85% coverage target
+
+
+KEY DIRECTORIES SUMMARY:
+
+Frontend (React 18 + TS):
+  ├── Components (UI)
+  ├── Pages (Routes)
+  ├── Services (API client, Socket.io)
+  ├── State (Zustand stores)
+  └── Types (TypeScript definitions)
+
+Backend (Express + Node):
+  ├── Models (MongoDB schemas)
+  ├── Routes (HTTP endpoints)
+  ├── Middleware (Auth, validation, errors)
+  ├── Sockets (Real-time events)
+  └── Utils (Database, Redis, JWT)
+
+Documentation:
+  ├── API specification
+  ├── Architecture & design patterns
+  ├── Development workflow
+  └── Production deployment
+
+CI/CD:
+  ├── GitHub Actions workflows
+  ├── Automated testing
+  ├── Build verification
+  └── Auto-deployment to Heroku/Netlify
