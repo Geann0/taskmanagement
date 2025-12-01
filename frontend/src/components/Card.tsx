@@ -14,12 +14,16 @@ const Card: React.FC<CardProps> = ({ card, projectId, boardId, columnId, onDelet
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(card.title);
   const [description, setDescription] = useState(card.description || '');
+  const [dueDate, setDueDate] = useState(
+    card.dueDate ? new Date(card.dueDate).toISOString().split('T')[0] : ''
+  );
 
   const handleSave = async () => {
     try {
       await apiClient.updateCard(projectId, boardId, columnId, card._id, {
         title,
         description,
+        dueDate: dueDate ? new Date(dueDate) : undefined,
       });
       setIsEditing(false);
     } catch (error) {
@@ -57,6 +61,12 @@ const Card: React.FC<CardProps> = ({ card, projectId, boardId, columnId, onDelet
           placeholder="Description (optional)"
           rows={2}
         />
+        <input
+          type="date"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+          className="w-full px-2 py-1 mb-2 border border-gray-300 rounded text-sm"
+        />
         <div className="flex gap-2">
           <button
             onClick={handleSave}
@@ -68,6 +78,9 @@ const Card: React.FC<CardProps> = ({ card, projectId, boardId, columnId, onDelet
             onClick={() => {
               setTitle(card.title);
               setDescription(card.description || '');
+              setDueDate(
+                card.dueDate ? new Date(card.dueDate).toISOString().split('T')[0] : ''
+              );
               setIsEditing(false);
             }}
             className="px-2 py-1 bg-gray-300 text-gray-700 text-xs rounded hover:bg-gray-400"
@@ -98,6 +111,12 @@ const Card: React.FC<CardProps> = ({ card, projectId, boardId, columnId, onDelet
       </div>
       {card.description && (
         <p className="text-xs text-gray-600 mt-1 line-clamp-2">{card.description}</p>
+      )}
+      {card.dueDate && (
+        <div className="text-xs text-blue-600 mt-2 flex items-center gap-1">
+          <span>📅</span>
+          <span>{new Date(card.dueDate).toLocaleDateString('pt-BR')}</span>
+        </div>
       )}
     </div>
   );

@@ -22,6 +22,7 @@ import cardRoutes from './routes/cards';
 import memberRoutes from './routes/members';
 import notificationRoutes from './routes/notifications';
 import pdfRoutes from './routes/pdf';
+import calendarRoutes from './routes/calendar';
 import { errorHandler } from './middleware/errorHandler';
 import { authenticateJWT } from './middleware/auth';
 
@@ -70,6 +71,7 @@ app.use('/projects/:projectId/boards/:boardId/cards', authenticateJWT, cardRoute
 app.use('/projects/:projectId/members', authenticateJWT, memberRoutes);
 app.use('/projects/:projectId/export/pdf', authenticateJWT, pdfRoutes);
 app.use('/notifications', authenticateJWT, notificationRoutes);
+app.use('/', authenticateJWT, calendarRoutes);
 
 // 404 handler
 app.use((_req: Request, res: Response) => {

@@ -48,8 +48,9 @@ beforeAll(async () => {
   });
   testUserId = user._id.toString();
 
-  // Generate test token
-  testToken = jwt.sign({ userId: testUserId }, process.env.JWT_SECRET || 'test-secret');
+  // Generate test token using same JWT_SECRET as production
+  const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+  testToken = jwt.sign({ userId: testUserId }, JWT_SECRET);
 
   // Create test project
   const project = await Project.create({

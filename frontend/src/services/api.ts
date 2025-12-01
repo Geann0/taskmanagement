@@ -178,6 +178,12 @@ class APIClient {
     const response = await this.client.put(`/notifications/${notificationId}/read`);
     return response.data;
   }
+
+  // Calendar endpoints
+  async syncProjectCalendar(projectId: string) {
+    const response = await this.client.post(`/projects/${projectId}/calendar/sync`);
+    return response.data;
+  }
 }
 
 export const apiClient = new APIClient();

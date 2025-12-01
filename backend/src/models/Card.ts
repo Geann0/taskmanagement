@@ -17,6 +17,7 @@ export interface ICard extends Document {
   tags: string[];
   priority: 'low' | 'medium' | 'high' | 'urgent';
   dueDate?: Date;
+  calendarEventId?: string;
   status: string;
   comments: Array<{
     authorId: mongoose.Types.ObjectId;
@@ -82,6 +83,7 @@ const cardSchema = new Schema<ICard>(
       default: 'medium',
     },
     dueDate: Date,
+    calendarEventId: String,
     status: {
       type: String,
       default: 'open',

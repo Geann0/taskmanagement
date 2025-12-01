@@ -47,10 +47,10 @@ const ProjectPage: React.FC = () => {
       // Preserve selected board or select first if none selected
       if (data.boards && data.boards.length > 0) {
         const currentBoardId = selectedBoard?._id;
-        const boardToSelect = currentBoardId 
-          ? data.boards.find(b => b._id === currentBoardId) || data.boards[0]
+        const boardToSelect = currentBoardId
+          ? data.boards.find((b) => b._id === currentBoardId) || data.boards[0]
           : data.boards[0];
-        
+
         setSelectedBoard(boardToSelect);
         setColumns(boardToSelect.columns || []);
       }
@@ -87,7 +87,7 @@ const ProjectPage: React.FC = () => {
       if (selectedBoard?._id === boardId) {
         setColumns((prev) => {
           // Check if column already exists to prevent duplicates
-          const exists = prev.some(col => col._id === column._id);
+          const exists = prev.some((col) => col._id === column._id);
           return exists ? prev : [...prev, column];
         });
       }
@@ -203,6 +203,22 @@ const ProjectPage: React.FC = () => {
     } catch (error) {
       console.error('Error exporting PDF:', error);
       alert('Failed to export PDF');
+    }
+  };
+
+  const handleSyncCalendar = async () => {
+    if (!projectId) return;
+
+    try {
+      const result = await apiClient.syncProjectCalendar(projectId);
+      alert(
+        `✅ ${result.message}\n\nEvents created: ${result.eventsCreated}/${result.totalCards}`
+      );
+    } catch (error: any) {
+      console.error('Error syncing calendar:', error);
+      const message =
+        error.response?.data?.message || 'Failed to sync calendar. Make sure you are logged in with Google.';
+      alert(`❌ ${message}`);
     }
   };
 
@@ -513,42 +529,52 @@ const ProjectPage: React.FC = () => {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-900">{selectedBoard.name}</h2>
 
-              {!isCreatingColumn ? (
+              <div className="flex gap-2">
                 <button
-                  onClick={() => setIsCreatingColumn(true)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  onClick={handleSyncCalendar}
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-2"
+                  title="Sync cards with Google Calendar"
                 >
-                  + Add Column
+                  <span>📅</span>
+                  <span>Sync Calendar</span>
                 </button>
-              ) : (
-                <form onSubmit={handleCreateColumn} className="flex gap-2">
-                  <input
-                    type="text"
-                    value={newColumnName}
-                    onChange={(e) => setNewColumnName(e.target.value)}
-                    placeholder="Column name..."
-                    className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    autoFocus
-                  />
+                {!isCreatingColumn ? (
                   <button
-                    type="submit"
-                    disabled={!newColumnName.trim()}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                    onClick={() => setIsCreatingColumn(true)}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                   >
-                    Add
+                    + Add Column
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsCreatingColumn(false);
-                      setNewColumnName('');
-                    }}
-                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
-                  >
-                    Cancel
-                  </button>
-                </form>
-              )}
+                ) : (
+                  <form onSubmit={handleCreateColumn} className="flex gap-2">
+                    <input
+                      type="text"
+                      value={newColumnName}
+                      onChange={(e) => setNewColumnName(e.target.value)}
+                      placeholder="Column name..."
+                      className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      autoFocus
+                    />
+                    <button
+                      type="submit"
+                      disabled={!newColumnName.trim()}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                    >
+                      Add
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsCreatingColumn(false);
+                        setNewColumnName('');
+                      }}
+                      className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                    >
+                      Cancel
+                    </button>
+                  </form>
+                )}
+              </div>
             </div>
 
             {/* Columns */}
