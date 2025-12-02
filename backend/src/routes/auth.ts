@@ -36,7 +36,9 @@ router.get('/oauth/google', (_req, res: Response) => {
     scope: [
       'https://www.googleapis.com/auth/userinfo.email',
       'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/calendar.events',
     ],
+    prompt: 'consent',
   });
   console.log('Generated OAuth URL:', authUrl.substring(0, 100) + '...');
   res.redirect(authUrl);
@@ -94,9 +96,26 @@ router.get('/oauth/google/callback', async (req, res: Response) => {
           {
             provider: 'google',
             providerId: data.id!,
+            accessToken: tokens.access_token,
+            refreshToken: tokens.refresh_token,
           },
         ],
       });
+      await user.save();
+    } else {
+      // Update existing user with new tokens
+      const googleProvider = user.providers.find((p) => p.provider === 'google');
+      if (googleProvider) {
+        googleProvider.accessToken = tokens.access_token;
+        googleProvider.refreshToken = tokens.refresh_token;
+      } else {
+        user.providers.push({
+          provider: 'google',
+          providerId: data.id!,
+          accessToken: tokens.access_token,
+          refreshToken: tokens.refresh_token,
+        });
+      }
       await user.save();
     }
 

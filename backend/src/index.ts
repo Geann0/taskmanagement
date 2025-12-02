@@ -57,6 +57,7 @@ app.get('/health', (_req: Request, res: Response) => {
 
 // API Routes
 app.use('/auth', authRoutes);
+app.use('/projects/:projectId/calendar', authenticateJWT, calendarRoutes);
 app.use('/projects', authenticateJWT, projectRoutes);
 // Nested routes for boards, columns, and cards
 app.use('/projects/:projectId/boards', authenticateJWT, boardRoutes);
@@ -71,7 +72,6 @@ app.use('/projects/:projectId/boards/:boardId/cards', authenticateJWT, cardRoute
 app.use('/projects/:projectId/members', authenticateJWT, memberRoutes);
 app.use('/projects/:projectId/export/pdf', authenticateJWT, pdfRoutes);
 app.use('/notifications', authenticateJWT, notificationRoutes);
-app.use('/', authenticateJWT, calendarRoutes);
 
 // 404 handler
 app.use((_req: Request, res: Response) => {

@@ -30,6 +30,7 @@ O card agora mostrará um ícone 📅 com a data formatada.
 ### 3. Resultado
 
 Após a sincronização, você verá uma mensagem com:
+
 - Número de eventos criados
 - Total de cards com datas
 - Erros (se houver)
@@ -49,11 +50,13 @@ Events created: 5/5
 **Autenticação:** Bearer Token (JWT)
 
 **Requisitos:**
+
 - Usuário deve estar autenticado via Google OAuth
 - Usuário deve ter `accessToken` e `refreshToken` do Google
 - Usuário deve ser membro do projeto
 
 **Resposta de Sucesso:**
+
 ```json
 {
   "message": "Successfully synced 5 cards to Google Calendar",
@@ -64,6 +67,7 @@ Events created: 5/5
 ```
 
 **Resposta de Erro:**
+
 ```json
 {
   "message": "Google Calendar not connected. Please authenticate with Google first."
@@ -75,6 +79,7 @@ Events created: 5/5
 **Localização:** `backend/src/services/googleCalendar.ts`
 
 **Métodos Disponíveis:**
+
 - `createEvent(event: CalendarEvent)` - Cria evento
 - `updateEvent(eventId, event)` - Atualiza evento existente
 - `deleteEvent(eventId)` - Remove evento
@@ -87,7 +92,7 @@ O Card agora possui dois novos campos:
 ```typescript
 interface ICard {
   // ... outros campos
-  dueDate?: Date;          // Data de vencimento
+  dueDate?: Date; // Data de vencimento
   calendarEventId?: string; // ID do evento no Google Calendar
 }
 ```
@@ -95,11 +100,13 @@ interface ICard {
 ### Frontend
 
 **Componente Card:**
+
 - Input de data tipo `date` no modo de edição
 - Display visual da data com ícone 📅
 - Formatação em pt-BR: `dd/mm/yyyy`
 
 **Página de Projeto:**
+
 - Botão "📅 Sync Calendar" no header do board
 - Mensagens de feedback com alertas do navegador
 - Integração com `apiClient.syncProjectCalendar()`
@@ -139,9 +146,9 @@ GOOGLE_REDIRECT_URI=http://localhost:5000/auth/oauth/google/callback
 
 ```typescript
 const scopes = [
-  'https://www.googleapis.com/auth/userinfo.email',
-  'https://www.googleapis.com/auth/userinfo.profile',
-  'https://www.googleapis.com/auth/calendar.events' // Necessário para Calendar
+  "https://www.googleapis.com/auth/userinfo.email",
+  "https://www.googleapis.com/auth/userinfo.profile",
+  "https://www.googleapis.com/auth/calendar.events", // Necessário para Calendar
 ];
 ```
 
@@ -168,25 +175,31 @@ const scopes = [
 ## Troubleshooting
 
 ### Erro: "Google Calendar not connected"
+
 **Causa:** Usuário não está autenticado via Google ou tokens expiraram
 
-**Solução:** 
+**Solução:**
+
 1. Fazer logout
 2. Login novamente via Google OAuth
 3. Garantir que o Google OAuth está configurado com scope de Calendar
 
 ### Erro: "Failed to create calendar event"
+
 **Causa:** Problema com credenciais ou permissões do Google
 
 **Solução:**
+
 1. Verificar se `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET` estão corretos
 2. Verificar se o app está autorizado no Google Cloud Console
 3. Verificar se a API do Google Calendar está habilitada
 
 ### Cards não aparecem no Google Calendar
+
 **Causa:** Cards podem não ter `dueDate` definido
 
 **Solução:**
+
 1. Editar os cards e adicionar datas de vencimento
 2. Clicar em "Sync Calendar" novamente
 
@@ -212,6 +225,7 @@ POST /projects/{projectId}/calendar/sync
 ### Verificar Eventos no Google Calendar
 
 Os eventos criados terão:
+
 - **Título:** `[Task] Reunião de Sprint Planning`
 - **Descrição:** `Definir tarefas da próxima sprint`
 - **Data/Hora:** 05/12/2025 14:00 - 15:00

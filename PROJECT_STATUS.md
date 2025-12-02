@@ -106,8 +106,9 @@
 ### ✅ TODAS AS FUNCIONALIDADES IMPLEMENTADAS (100%)
 
 Não há funcionalidades pendentes! Todos os 12 requisitos foram completamente implementados e testados.
-  - Usar Google Calendar API (`googleapis` já instalado)
-  - Criar eventos no calendário quando card tem `dueDate`
+
+- Usar Google Calendar API (`googleapis` já instalado)
+- Criar eventos no calendário quando card tem `dueDate`
 
 #### 2. **Browser Push Notifications** ❌
 

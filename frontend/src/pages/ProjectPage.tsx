@@ -5,6 +5,7 @@ import { arrayMove } from '@dnd-kit/sortable';
 import { apiClient } from '../services/api';
 import { socketService } from '../lib/socket';
 import { notificationService } from '../services/notifications';
+import { useToast } from '../contexts/ToastContext';
 import Header from '../components/Header';
 import ColumnComponent from '../components/Column';
 import { Project, Board, Column } from '../types';
@@ -12,6 +13,7 @@ import { Project, Board, Column } from '../types';
 const ProjectPage: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const navigate = useNavigate();
+  const toast = useToast();
   const [project, setProject] = useState<Project | null>(null);
   const [boards, setBoards] = useState<Board[]>([]);
   const [selectedBoard, setSelectedBoard] = useState<Board | null>(null);
@@ -202,7 +204,7 @@ const ProjectPage: React.FC = () => {
       }
     } catch (error) {
       console.error('Error exporting PDF:', error);
-      alert('Failed to export PDF');
+      toast.error('Failed to export PDF');
     }
   };
 
@@ -211,14 +213,13 @@ const ProjectPage: React.FC = () => {
 
     try {
       const result = await apiClient.syncProjectCalendar(projectId);
-      alert(
-        `✅ ${result.message}\n\nEvents created: ${result.eventsCreated}/${result.totalCards}`
-      );
+      toast.success(`${result.message}\n\nEvents created: ${result.eventsCreated}/${result.totalCards || 0}`);
     } catch (error: any) {
       console.error('Error syncing calendar:', error);
       const message =
-        error.response?.data?.message || 'Failed to sync calendar. Make sure you are logged in with Google.';
-      alert(`❌ ${message}`);
+        error.response?.data?.message ||
+        'Failed to sync calendar. Make sure you are logged in with Google.';
+      toast.error(message);
     }
   };
 

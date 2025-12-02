@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card as CardType } from '../types';
 import { apiClient } from '../services/api';
+import { useToast } from '../contexts/ToastContext';
 
 interface CardProps {
   card: CardType;
@@ -11,6 +12,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ card, projectId, boardId, columnId, onDelete }) => {
+  const toast = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(card.title);
   const [description, setDescription] = useState(card.description || '');
@@ -26,21 +28,21 @@ const Card: React.FC<CardProps> = ({ card, projectId, boardId, columnId, onDelet
         dueDate: dueDate ? new Date(dueDate) : undefined,
       });
       setIsEditing(false);
+      toast.success('Card updated successfully');
     } catch (error) {
       console.error('Failed to update card:', error);
-      alert('Failed to update card');
+      toast.error('Failed to update card');
     }
   };
 
   const handleDelete = async () => {
-    if (!window.confirm('Delete this card?')) return;
-
     try {
       await apiClient.deleteCard(projectId, boardId, columnId, card._id);
       onDelete(card._id);
+      toast.success('Card deleted successfully');
     } catch (error) {
       console.error('Failed to delete card:', error);
-      alert('Failed to delete card');
+      toast.error('Failed to delete card');
     }
   };
 
@@ -78,9 +80,7 @@ const Card: React.FC<CardProps> = ({ card, projectId, boardId, columnId, onDelet
             onClick={() => {
               setTitle(card.title);
               setDescription(card.description || '');
-              setDueDate(
-                card.dueDate ? new Date(card.dueDate).toISOString().split('T')[0] : ''
-              );
+              setDueDate(card.dueDate ? new Date(card.dueDate).toISOString().split('T')[0] : '');
               setIsEditing(false);
             }}
             className="px-2 py-1 bg-gray-300 text-gray-700 text-xs rounded hover:bg-gray-400"
@@ -115,7 +115,13 @@ const Card: React.FC<CardProps> = ({ card, projectId, boardId, columnId, onDelet
       {card.dueDate && (
         <div className="text-xs text-blue-600 mt-2 flex items-center gap-1">
           <span>📅</span>
-          <span>{new Date(card.dueDate).toLocaleDateString('pt-BR')}</span>
+          <span>{
+            (() => {
+              const date = new Date(card.dueDate);
+              const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+              return localDate.toLocaleDateString('pt-BR');
+            })()
+          }</span>
         </div>
       )}
     </div>

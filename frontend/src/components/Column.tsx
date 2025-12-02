@@ -4,6 +4,7 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { Column as ColumnType } from '../types';
 import DraggableCard from './DraggableCard';
 import { apiClient } from '../services/api';
+import { useToast } from '../contexts/ToastContext';
 
 interface ColumnProps {
   column: ColumnType;
@@ -13,22 +14,33 @@ interface ColumnProps {
 }
 
 const Column: React.FC<ColumnProps> = ({ column, projectId, boardId, onCardCreated }) => {
+  const toast = useToast();
   const [isAddingCard, setIsAddingCard] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState('');
+  const [newCardDescription, setNewCardDescription] = useState('');
+  const [newCardDueDate, setNewCardDueDate] = useState('');
 
   const cards = column.cards || [];
 
   const handleAddCard = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newCardTitle.trim()) return;
+    if (!newCardTitle.trim()) {
+      toast.warning('Card title is required');
+      return;
+    }
 
     try {
       await apiClient.createCard(projectId, boardId, column._id, {
         title: newCardTitle,
+        description: newCardDescription,
+        dueDate: newCardDueDate ? new Date(newCardDueDate) : undefined,
         order: cards.length,
       });
       setNewCardTitle('');
+      setNewCardDescription('');
+      setNewCardDueDate('');
       setIsAddingCard(false);
+      toast.success('Card created successfully');
 
       // Trigger parent reload
       if (onCardCreated) {
@@ -36,20 +48,17 @@ const Column: React.FC<ColumnProps> = ({ column, projectId, boardId, onCardCreat
       }
     } catch (error) {
       console.error('Failed to create card:', error);
-      alert('Failed to create card');
+      toast.error('Failed to create card');
     }
   };
 
   const handleDeleteColumn = async () => {
-    if (!window.confirm(`Delete column "${column.name}"? This will delete all cards in it.`)) {
-      return;
-    }
-
     try {
       await apiClient.deleteColumn(projectId, boardId, column._id);
+      toast.success('Column deleted successfully');
     } catch (error) {
       console.error('Failed to delete column:', error);
-      alert('Failed to delete column');
+      toast.error('Failed to delete column');
     }
   };
 
@@ -92,13 +101,26 @@ const Column: React.FC<ColumnProps> = ({ column, projectId, boardId, onCardCreat
 
       {isAddingCard ? (
         <form onSubmit={handleAddCard} className="space-y-2">
-          <textarea
+          <input
+            type="text"
             value={newCardTitle}
             onChange={(e) => setNewCardTitle(e.target.value)}
-            placeholder="Enter card title..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg resize-none"
-            rows={2}
+            placeholder="Card title"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
             autoFocus
+          />
+          <textarea
+            value={newCardDescription}
+            onChange={(e) => setNewCardDescription(e.target.value)}
+            placeholder="Description (optional)"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg resize-none text-sm"
+            rows={2}
+          />
+          <input
+            type="date"
+            value={newCardDueDate}
+            onChange={(e) => setNewCardDueDate(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
           />
           <div className="flex gap-2">
             <button
@@ -112,6 +134,8 @@ const Column: React.FC<ColumnProps> = ({ column, projectId, boardId, onCardCreat
               onClick={() => {
                 setIsAddingCard(false);
                 setNewCardTitle('');
+                setNewCardDescription('');
+                setNewCardDueDate('');
               }}
               className="px-3 py-1.5 bg-gray-300 text-gray-700 text-sm rounded hover:bg-gray-400"
             >

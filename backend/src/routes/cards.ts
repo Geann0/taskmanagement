@@ -63,7 +63,7 @@ router.post(
   async (req: AuthRequest, res: Response) => {
     try {
       const { projectId, boardId, columnId } = req.params;
-      const { title, description, order } = req.body;
+      const { title, description, dueDate, order } = req.body;
 
       if (!title) {
         return res.status(400).json({ error: 'Card title is required' });
@@ -88,6 +88,7 @@ router.post(
         _id: new (require('mongoose').Types.ObjectId)(),
         title,
         description: description || '',
+        dueDate: dueDate ? new Date(dueDate) : undefined,
         order: order ?? column.cards.length,
         assignees: [],
         tags: [],
@@ -169,7 +170,7 @@ router.put(
   async (req: AuthRequest, res: Response) => {
     try {
       const { projectId, boardId, columnId, cardId } = req.params;
-      const { title, description } = req.body;
+      const { title, description, dueDate } = req.body;
 
       const project = await Project.findById(projectId);
       if (!project) {
@@ -193,6 +194,7 @@ router.put(
 
       if (title !== undefined) card.title = title;
       if (description !== undefined) card.description = description;
+      if (dueDate !== undefined) card.dueDate = dueDate ? new Date(dueDate) : null;
       card.updatedAt = new Date();
 
       await project.save();

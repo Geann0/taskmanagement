@@ -2,7 +2,7 @@ import jwt, { SignOptions } from 'jsonwebtoken';
 
 export const generateJWT = (userId: string, expiresIn?: string): string => {
   const secret = process.env.JWT_SECRET || 'secret';
-  const expiry = expiresIn || process.env.JWT_EXPIRES_IN || '15m';
+  const expiry = expiresIn || process.env.JWT_EXPIRES_IN || '7d';
 
   const options: SignOptions = { expiresIn: expiry as any };
   return jwt.sign({ userId }, secret, options);
