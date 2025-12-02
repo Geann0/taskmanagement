@@ -1,143 +1,147 @@
 # Task Management App
 
-A collaborative, real-time Kanban board application with drag-and-drop functionality, built with React 18, TypeScript, Node.js/Express, MongoDB, and Socket.io.
+Aplicativo colaborativo de gestão de tarefas estilo Kanban com funcionalidade de arrastar e soltar, construído com React 18, TypeScript, Node.js/Express, MongoDB e Socket.io.
 
-## 🎯 Features
+## 🎯 Funcionalidades
 
-- **Collaborative Kanban Board**: Drag-and-drop cards between columns with real-time synchronization
-- **Real-time Collaboration**: Multiple users can work on the same board simultaneously using Socket.io
-- **Task Management**: Create, edit, and delete tasks with priorities, due dates, and assignments
-- **Comments & Activity**: Add comments to cards and track activity logs
-- **Notifications**: In-app and push notifications for task events
-- **Google Calendar Integration**: Sync tasks with Google Calendar
-- **Permissions**: Fine-grained access control (Owner, Admin, Editor, Commenter, Viewer)
-- **PDF Reports**: Export project reports as PDF
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Quadro Kanban Colaborativo**: Arraste e solte cartões entre colunas com sincronização em tempo real
+- **Colaboração em Tempo Real**: Múltiplos usuários podem trabalhar no mesmo quadro simultaneamente usando Socket.io
+- **Gerenciamento de Tarefas**: Crie, edite e exclua tarefas com prioridades, datas de vencimento e atribuições
+- **Comentários e Atividades**: Adicione comentários aos cartões e acompanhe logs de atividades
+- **Notificações**: Notificações no aplicativo e push para eventos de tarefas
+- **Integração com Google Calendar**: Sincronize tarefas com o Google Calendar
+- **Permissões**: Controle de acesso granular (Owner, Admin, Editor, Commenter, Viewer)
+- **Relatórios em PDF**: Exporte relatórios de projetos em PDF
+- **Design Responsivo**: Funciona perfeitamente em desktop e dispositivos móveis
 
-## 🏗️ Architecture
+## 🏗️ Arquitetura
 
 ### Frontend
 
 - **Framework**: React 18 + TypeScript
-- **State Management**: Zustand + TanStack Query (React Query)
-- **Real-time**: Socket.io client
+- **Gerenciamento de Estado**: Zustand + TanStack Query (React Query)
+- **Tempo Real**: Cliente Socket.io
 - **Drag & Drop**: React DnD
-- **Styling**: Tailwind CSS
-- **Routing**: React Router v6
+- **Estilização**: Tailwind CSS
+- **Roteamento**: React Router v6
 
 ### Backend
 
 - **Runtime**: Node.js (LTS)
 - **Framework**: Express.js
-- **Database**: MongoDB (Mongoose ORM)
-- **Real-time**: Socket.io
-- **Authentication**: OAuth2 (Google) + JWT
-- **Jobs**: Bull + Redis for background tasks
-- **API Docs**: Swagger (OpenAPI 3.0)
+- **Banco de Dados**: MongoDB (Mongoose ORM)
+- **Tempo Real**: Socket.io
+- **Autenticação**: OAuth2 (Google) + JWT
+- **Jobs**: Bull + Redis para tarefas em background
+- **Documentação API**: Swagger (OpenAPI 3.0)
 
-### Infrastructure
+### Infraestrutura
 
-- **Frontend Deploy**: Netlify
-- **Backend Deploy**: Heroku
+- **Deploy Frontend**: Netlify
+- **Deploy Backend**: Heroku
 - **Cache & Pub/Sub**: Redis
-- **Error Tracking**: Sentry
+- **Rastreamento de Erros**: Sentry
 - **CI/CD**: GitHub Actions
 
-## 🚀 Getting Started
+## 🚀 Como Começar
 
-### Prerequisites
+### Pré-requisitos
 
 - Node.js 18+ (LTS)
-- npm or yarn
-- Docker & Docker Compose (for local development)
+- npm ou yarn
+- Docker & Docker Compose (para desenvolvimento local)
 
-### Local Development Setup
+### Configuração do Ambiente de Desenvolvimento
 
-#### 1. Clone and Navigate to Project
+#### 1. Clone e Navegue até o Projeto
 
 ```bash
 cd "Task Management App"
 ```
 
-#### 2. Start Database & Cache Services
+#### 2. Inicie os Serviços de Banco de Dados e Cache
 
 ```bash
 docker-compose up -d
 ```
 
-This starts MongoDB and Redis locally.
+Isso inicia o MongoDB e Redis localmente.
 
-#### 3. Backend Setup
+#### 3. Configuração do Backend
 
 ```bash
 cd backend
 
-# Copy environment variables
+# Copie as variáveis de ambiente
 cp .env.example .env
 
-# Install dependencies
+# Instale as dependências
 npm install
 
-# Start development server
+# Inicie o servidor de desenvolvimento
 npm run dev
 ```
 
-The backend runs on `http://localhost:3000`
+O backend executa em `http://localhost:5000`
 
-#### 4. Frontend Setup (in a new terminal)
+#### 4. Configuração do Frontend (em um novo terminal)
 
 ```bash
 cd frontend
 
-# Copy environment variables
+# Copie as variáveis de ambiente
 cp .env.example .env
 
-# Install dependencies
+# Instale as dependências
 npm install
 
-# Start development server
+# Inicie o servidor de desenvolvimento
 npm start
 ```
 
-The frontend runs on `http://localhost:3001`
+O frontend executa em `http://localhost:3000`
 
-### Environment Variables
+### Variáveis de Ambiente
 
 #### Backend (.env)
 
 ```
-PORT=3000
+PORT=5000
 NODE_ENV=development
 MONGO_URI=mongodb://localhost:27017/taskapp
-JWT_SECRET=your_jwt_secret_here
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
+JWT_SECRET=seu_jwt_secret_aqui
+JWT_EXPIRES_IN=7d
+GOOGLE_CLIENT_ID=seu_google_client_id
+GOOGLE_CLIENT_SECRET=seu_google_client_secret
+GOOGLE_REDIRECT_URI=http://localhost:5000/auth/oauth/google/callback
 REDIS_URL=redis://localhost:6379
+FRONTEND_URL=http://localhost:3000
 ```
 
 #### Frontend (.env)
 
 ```
-REACT_APP_API_URL=http://localhost:3000
-REACT_APP_WS_URL=ws://localhost:3000
-REACT_APP_GOOGLE_CLIENT_ID=your_google_client_id
+REACT_APP_API_URL=http://localhost:5000
+REACT_APP_WS_URL=ws://localhost:5000
+REACT_APP_GOOGLE_CLIENT_ID=seu_google_client_id
 ```
 
-See `.env.example` files for complete variable lists.
+Veja os arquivos `.env.example` para listas completas de variáveis.
 
-## 📁 Project Structure
+## 📁 Estrutura do Projeto
 
 ```
 Task Management App/
-├── frontend/                    # React 18 + TypeScript frontend
+├── frontend/                    # Frontend React 18 + TypeScript
 │   ├── src/
-│   │   ├── components/         # Reusable React components
-│   │   ├── pages/              # Page components
+│   │   ├── components/         # Componentes React reutilizáveis
+│   │   ├── contexts/           # Context API (Toast, etc)
+│   │   ├── pages/              # Componentes de página
 │   │   ├── hooks/              # Custom React hooks
-│   │   ├── services/           # API client
-│   │   ├── lib/                # Socket.io and state management
-│   │   ├── types/              # TypeScript type definitions
-│   │   ├── styles/             # Global styles
+│   │   ├── services/           # Cliente da API
+│   │   ├── lib/                # Socket.io e gerenciamento de estado
+│   │   ├── types/              # Definições de tipos TypeScript
+│   │   ├── styles/             # Estilos globais
 │   │   ├── App.tsx
 │   │   └── index.tsx
 │   ├── public/
@@ -146,83 +150,83 @@ Task Management App/
 │   ├── .eslintrc.json
 │   └── .env.example
 │
-├── backend/                     # Express + MongoDB backend
+├── backend/                     # Backend Express + MongoDB
 │   ├── src/
-│   │   ├── routes/             # API route handlers
-│   │   ├── controllers/        # Business logic
-│   │   ├── services/           # Service layer
-│   │   ├── models/             # Mongoose schemas
-│   │   ├── middleware/         # Express middleware
-│   │   ├── sockets/            # Socket.io event handlers
-│   │   ├── jobs/               # Background job handlers
-│   │   ├── utils/              # Utility functions
-│   │   └── index.ts            # Server entry point
-│   ├── tests/                  # Test files
+│   │   ├── routes/             # Manipuladores de rotas da API
+│   │   ├── controllers/        # Lógica de negócio
+│   │   ├── services/           # Camada de serviço (Google Calendar, etc)
+│   │   ├── models/             # Schemas do Mongoose
+│   │   ├── middleware/         # Middleware do Express
+│   │   ├── sockets/            # Manipuladores de eventos Socket.io
+│   │   ├── jobs/               # Manipuladores de jobs em background
+│   │   ├── utils/              # Funções utilitárias (JWT, etc)
+│   │   └── index.ts            # Ponto de entrada do servidor
+│   ├── tests/                  # Arquivos de teste
 │   ├── package.json
 │   ├── tsconfig.json
 │   ├── jest.config.js
 │   ├── .eslintrc.json
 │   └── .env.example
 │
-├── docs/                        # Documentation
-├── docker-compose.yml          # Local development services
+├── docs/                        # Documentação
+├── docker-compose.yml          # Serviços de desenvolvimento local
 ├── .gitignore
-└── README.md                   # This file
+└── README.md                   # Este arquivo
 ```
 
-## 🧪 Testing
+## 🧪 Testes
 
-### Backend Tests
+### Testes do Backend
 
 ```bash
 cd backend
 
-# Run all tests
+# Executar todos os testes
 npm test
 
-# Run tests in watch mode
+# Executar testes em modo watch
 npm run test:watch
 
-# Generate coverage report
+# Gerar relatório de cobertura
 npm test -- --coverage
 ```
 
-### Frontend Tests
+### Testes do Frontend
 
 ```bash
 cd frontend
 
-# Run all tests
+# Executar todos os testes
 npm test
 
-# Run tests in watch mode
+# Executar testes em modo watch
 npm test -- --watch
 ```
 
-### E2E Tests
+### Testes E2E
 
 ```bash
 cd frontend
 
-# Run Cypress tests (requires backend running)
+# Executar testes Cypress (requer backend em execução)
 npm run cypress:open
 ```
 
-## 📝 Code Quality
+## 📝 Qualidade de Código
 
 ### Linting
 
 ```bash
 cd backend
-npm run lint          # Check for linting errors
-npm run lint:fix      # Fix linting errors
+npm run lint          # Verificar erros de linting
+npm run lint:fix      # Corrigir erros de linting
 
 cd ../frontend
 npm run lint
 npm run lint:fix
 ```
 
-### Code Formatting
+### Formatação de Código
 
 ```bash
 cd backend
@@ -232,40 +236,40 @@ cd ../frontend
 npm run format
 ```
 
-## 🔗 API Documentation
+## 🔗 Documentação da API
 
-The API is documented using Swagger. Once the backend is running, visit:
+A API está documentada usando Swagger. Uma vez que o backend estiver em execução, visite:
 
 ```
-http://localhost:3000/api-docs
+http://localhost:5000/api-docs
 ```
 
-### Key Endpoints
+### Principais Endpoints
 
-- `POST /auth/oauth/google` - OAuth2 login
-- `GET/POST /projects` - Project management
-- `GET/POST /projects/:projectId/boards` - Board management
-- `GET/POST /columns/:columnId/cards` - Card management
-- `GET/PUT /notifications` - Notifications
-- `POST /projects/:projectId/calendar/sync` - Google Calendar sync
+- `POST /auth/oauth/google` - Login OAuth2
+- `GET/POST /projects` - Gerenciamento de projetos
+- `GET/POST /projects/:projectId/boards` - Gerenciamento de quadros
+- `GET/POST /columns/:columnId/cards` - Gerenciamento de cartões
+- `GET/PUT /notifications` - Notificações
+- `POST /projects/:projectId/calendar/sync` - Sincronização com Google Calendar
 
-## 🔐 Security
+## 🔐 Segurança
 
-- **HTTPS Only**: All production traffic is encrypted
-- **CSRF Protection**: CSRF tokens for state-changing operations
-- **XSS Prevention**: Input validation and output encoding
-- **Rate Limiting**: API rate limiting on sensitive endpoints
-- **JWT Auth**: Secure token-based authentication
-- **Environment Secrets**: Sensitive data stored in environment variables
+- **Somente HTTPS**: Todo o tráfego de produção é criptografado
+- **Proteção CSRF**: Tokens CSRF para operações que alteram estado
+- **Prevenção XSS**: Validação de entrada e codificação de saída
+- **Rate Limiting**: Limitação de taxa da API em endpoints sensíveis
+- **Autenticação JWT**: Autenticação segura baseada em token (7 dias de validade)
+- **Secrets de Ambiente**: Dados sensíveis armazenados em variáveis de ambiente
 
-## 🚢 Deployment
+## 😢 Deploy
 
 ### Frontend (Netlify)
 
 ```bash
 cd frontend
 npm run build
-# Deployment handled by Netlify
+# Deploy gerenciado pelo Netlify
 ```
 
 ### Backend (Heroku)
@@ -276,40 +280,40 @@ npm run build
 git push heroku main
 ```
 
-See deployment guides in `/docs` for detailed instructions.
+Veja os guias de deploy em `/docs` para instruções detalhadas.
 
-## 📊 Database Schema
+## 📊 Schema do Banco de Dados
 
-### User
+### User (Usuário)
 
 - email (unique)
 - name
 - avatarUrl
-- providers (OAuth2 credentials)
-- roles (per-project permissions)
+- providers (credenciais OAuth2)
+- roles (permissões por projeto)
 
-### Project
+### Project (Projeto)
 
 - name
 - description
 - visibility (private, team, public)
-- members (with roles)
-- settings (calendar sync, default assignee)
+- members (com roles)
+- settings (sincronização de calendário, atribuidor padrão)
 
-### Board
+### Board (Quadro)
 
 - projectId
 - name
 - columnsOrder
 
-### Column
+### Column (Coluna)
 
 - boardId
 - title
 - order
-- limit (WIP limit, optional)
+- limit (limite WIP, opcional)
 
-### Card
+### Card (Cartão)
 
 - columnId, boardId, projectId
 - title, description
@@ -317,45 +321,49 @@ See deployment guides in `/docs` for detailed instructions.
 - priority, dueDate
 - comments, activityLog
 - attachments
+- calendarEventId (Google Calendar)
 
-### Notification
+### Notification (Notificação)
 
 - userId
 - type (task_assigned, task_moved, etc.)
 - payload
-- read status
+- status de leitura
 
-## 🤝 Contributing
+## 🤝 Contribuindo
 
-1. Create a feature branch: `git checkout -b feature/your-feature`
-2. Commit changes: `git commit -am 'Add feature'`
-3. Push to branch: `git push origin feature/your-feature`
-4. Open a pull request
+1. Crie um branch de feature: `git checkout -b feature/sua-feature`
+2. Commit suas mudanças: `git commit -am 'Adiciona feature'`
+3. Push para o branch: `git push origin feature/sua-feature`
+4. Abra um pull request
 
-## 📋 Development Checklist
+## 📋 Checklist de Desenvolvimento
 
-- [ ] Set up local environment with Docker Compose
-- [ ] Configure OAuth2 credentials
-- [ ] Run backend and frontend servers
-- [ ] Create test data in MongoDB
-- [ ] Test drag-and-drop functionality
-- [ ] Verify real-time synchronization
-- [ ] Run test suite (target 85% coverage)
-- [ ] Check linting and formatting
-- [ ] Review API documentation
+- [x] Configurar ambiente local com Docker Compose
+- [x] Configurar credenciais OAuth2
+- [x] Executar servidores backend e frontend
+- [x] Criar dados de teste no MongoDB
+- [x] Testar funcionalidade drag-and-drop
+- [x] Verificar sincronização em tempo real
+- [x] Implementar integração Google Calendar
+- [x] Sistema de notificações toast
+- [x] Correção de timezone para datas
+- [x] Executar suíte de testes (meta 85% de cobertura)
+- [x] Verificar linting e formatação
+- [x] Revisar documentação da API
 
-## 📅 Milestones
+## 📅 Marcos do Projeto
 
-1. **Week 1-2**: Project setup, authentication, basic CRUD
-2. **Week 3-4**: Kanban UI, drag-and-drop, real-time sync
-3. **Week 5-6**: Notifications, calendar integration
-4. **Week 7-8**: Reports, PDF export, testing
-5. **Week 9**: Production hardening, deployment
+1. **Semanas 1-2**: Configuração do projeto, autenticação, CRUD básico
+2. **Semanas 3-4**: UI Kanban, drag-and-drop, sincronização em tempo real
+3. **Semanas 5-6**: Notificações, integração com calendário
+4. **Semanas 7-8**: Relatórios, exportação PDF, testes
+5. **Semana 9**: Hardening de produção, deploy
 
-## 📞 Support
+## 📞 Suporte
 
-For issues, questions, or suggestions, please open a GitHub issue or contact the development team.
+Para problemas, questões ou sugestões, abra uma issue no GitHub ou entre em contato com a equipe de desenvolvimento.
 
-## 📄 License
+## 📄 Licença
 
-MIT License - See LICENSE file for details.
+Licença MIT - Veja o arquivo LICENSE para detalhes.
