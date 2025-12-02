@@ -2,17 +2,33 @@
 
 Aplicativo colaborativo de gestão de tarefas estilo Kanban com funcionalidade de arrastar e soltar, construído com React 18, TypeScript, Node.js/Express, MongoDB e Socket.io.
 
-## 🎯 Funcionalidades
+> 📢 **Versão Demo Open Source** - Esta é a versão core do projeto. Features premium (Analytics Avançado, Automações, White Label, SSO Empresarial) estão disponíveis apenas na versão cloud paga.
 
+## 🎯 Funcionalidades (Versão Core)
+
+### ✅ Incluído Nesta Versão
 - **Quadro Kanban Colaborativo**: Arraste e solte cartões entre colunas com sincronização em tempo real
 - **Colaboração em Tempo Real**: Múltiplos usuários podem trabalhar no mesmo quadro simultaneamente usando Socket.io
 - **Gerenciamento de Tarefas**: Crie, edite e exclua tarefas com prioridades, datas de vencimento e atribuições
 - **Comentários e Atividades**: Adicione comentários aos cartões e acompanhe logs de atividades
-- **Notificações**: Notificações no aplicativo e push para eventos de tarefas
+- **Notificações Toast**: Sistema moderno de notificações em tempo real
 - **Integração com Google Calendar**: Sincronize tarefas com o Google Calendar
 - **Permissões**: Controle de acesso granular (Owner, Admin, Editor, Commenter, Viewer)
 - **Relatórios em PDF**: Exporte relatórios de projetos em PDF
 - **Design Responsivo**: Funciona perfeitamente em desktop e dispositivos móveis
+- **Autenticação Google OAuth2**: Login seguro com refresh tokens
+
+### 💎 Features Premium (Cloud Pago)
+- 📊 **Analytics Avançado**: Métricas de produtividade, burndown charts, velocity
+- 🤖 **Automações Avançadas**: Triggers personalizados, integrações Zapier-like
+- 🎨 **White Label**: Remova branding, customize cores e domínio
+- 🔐 **SSO Empresarial**: Integração com SAML, Azure AD, Okta
+- 🌍 **Multi-workspace**: Múltiplas organizações isoladas
+- 📈 **Relatórios Customizados**: Templates avançados, scheduled reports
+- ⚡ **Performance Premium**: SLA 99.9%, suporte prioritário 24/7
+- 🔌 **API Pública**: Integre com seus sistemas
+
+**Interessado nas features premium?** Contato: hadukcomenta@gmail.com
 
 ## 🏗️ Arquitetura
 
@@ -337,6 +353,41 @@ Veja os guias de deploy em `/docs` para instruções detalhadas.
 3. Push para o branch: `git push origin feature/sua-feature`
 4. Abra um pull request
 
+**Nota:** Contribuições são bem-vindas para a versão core. Features premium não aceitam PRs externos.
+
+## 💼 Uso Comercial
+
+### 📜 Licenciamento
+
+Este projeto usa **Apache License 2.0** com termos adicionais:
+
+**✅ Uso GRATUITO para:**
+- Uso pessoal
+- Fins educacionais
+- Organizações sem fins lucrativos
+- Avaliação e testes
+
+**💰 Uso COMERCIAL requer:**
+- Atribuição clara ao projeto original
+- NÃO revender o software como produto concorrente
+- Contato para licenciamento comercial: hadukcomenta@gmail.com
+
+### 🚀 Planos Cloud (Futuro SaaS)
+
+| Feature | Core (Grátis) | Pro ($9/mês) | Team ($29/mês) |
+|---------|---------------|--------------|----------------|
+| Projetos | 3 | Ilimitados | Ilimitados |
+| Membros | 5 | 15 | Ilimitados |
+| Google Calendar | ✅ | ✅ | ✅ |
+| PDF Export | ✅ | ✅ | ✅ |
+| Analytics | ❌ | ✅ | ✅ |
+| Automações | ❌ | Básico | Avançado |
+| White Label | ❌ | ❌ | ✅ |
+| SSO | ❌ | ❌ | ✅ |
+| Suporte | Community | Email | Prioritário 24/7 |
+
+**Contato para licenciamento ou planos Enterprise:** hadukcomenta@gmail.com
+
 ## 📋 Checklist de Desenvolvimento
 
 - [x] Configurar ambiente local com Docker Compose
@@ -362,8 +413,24 @@ Veja os guias de deploy em `/docs` para instruções detalhadas.
 
 ## 📞 Suporte
 
-Para problemas, questões ou sugestões, abra uma issue no GitHub ou entre em contato com a equipe de desenvolvimento.
+- **Community (Grátis)**: Abra uma issue no GitHub
+- **Licenciamento Comercial**: hadukcomenta@gmail.com
+- **Consultoria/Customização**: hadukcomenta@gmail.com
+- **Planos Enterprise**: hadukcomenta@gmail.com
 
 ## 📄 Licença
 
-Licença MIT - Veja o arquivo LICENSE para detalhes.
+**Apache License 2.0** com termos adicionais para uso comercial.
+
+Veja o arquivo [LICENSE](LICENSE) para detalhes completos.
+
+**TL;DR:**
+- ✅ Grátis para uso pessoal, educacional e não-comercial
+- 💰 Uso comercial requer licenciamento ou planos cloud
+- 📧 Contato: hadukcomenta@gmail.com
+
+---
+
+**⭐ Se este projeto te ajudou, deixe uma estrela no GitHub!**
+
+**💼 Interessado em contratar o desenvolvedor?** [LinkedIn](https://linkedin.com) | [Email](mailto:hadukcomenta@gmail.com)
